@@ -10,8 +10,10 @@
   "author": "Shubham Pathak",
   "license": "ISC",
   "dependencies": {
+    "compression": "^1.7.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "helmet": "^4.6.0",
     "mongoose": "^5.12.7",
     "winston": "^3.3.3"
   },

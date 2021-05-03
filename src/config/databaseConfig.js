@@ -5,10 +5,10 @@ const config = require('../../config.json');
 const configureDatabase = async () => {
     try {
         let mongoUrl;
-        if (config.database.dbUsername !== null && config.database.dbPassword !== null) {
-            mongoUrl = `mongodb://${config.database.dbUsername}:${config.database.dbPassword}@${config.database.dbUrl}:${config.database.dbPort}/BhootBlog`;
+        if (config.database.db_username !== null && config.database.db_password !== null) {
+            mongoUrl = `mongodb://${config.database.db_username}:${config.database.db_password}@${config.database.db_url}:${config.database.db_port}/BhootBlog`;
         } else {
-            mongoUrl = `mongodb://${config.database.dbUrl}:${config.database.dbPort}/BhootBlog`;
+            mongoUrl = `mongodb://${config.database.db_url}:${config.database.db_port}/BhootBlog`;
         }
         await mongoose.connect(mongoUrl,
             {
