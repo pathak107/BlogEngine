@@ -12,8 +12,9 @@
     "settings":{
         "title":"My blog name",
         "description": "Description for my blog to show in meta description.",
-        "logo": "https://docs.ghost.io/content/images/2014/09/Ghost-Transparent-for-DARK-BG.png",
-        "cover_image": "https://docs.ghost.io/content/images/2019/10/publication-cover.png",
+        "url": "https://myblog.com",
+        "logo": "https://myblog.com/content/images/2014/09/Ghost-Transparent-for-DARK-BG.png",
+        "cover_image": "https://myblog.com/content/images/2019/10/publication-cover.png",
         "social_media":{
             "facebook": "fbusername",
             "twitter": "@twitterusername",
@@ -26,7 +27,6 @@
         "og_description": null,
         "twitter_image": null,
         "twitter_title": null,
-        "twitter_description": null,
-        "url": "https://myblog.com"
+        "twitter_description": null
     }
 }
