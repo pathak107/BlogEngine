@@ -1,0 +1,12 @@
+{
+    "database":{
+        "dbUrl":"localhost",
+        "dbUsername":null,
+        "dbPassword":null,
+        "dbPort":27017
+    },
+    "admin":{
+        "adminEmail":"admin@gmail.com",
+        "adminPassword":"qwerty"
+    }
+}
