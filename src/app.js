@@ -6,8 +6,13 @@ const compression = require('compression');
 const { logger } = require('./config/logger');
 const { configureDatabase } = require('./config/databaseConfig');
 
-// Setting secure http headers
+// Setting content type as json
+app.use(express.json());
+
+// Setting middleware for secure http headers
 app.use(helmet());
+
+// Setting middleware to compress body of the requests
 app.use(compression());
 
 // configuring database
