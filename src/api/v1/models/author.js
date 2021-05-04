@@ -1,3 +1,19 @@
+const { Schema, model } = require('mongoose');
+
+const authorSchema = new Schema({
+    slug: String,
+    name: String,
+    profile_image: String, // url
+    bio: String,
+    website: String, // url
+    facebook: String,
+    twitter: String,
+    url: String, // url to the author's page if there's a page for him
+});
+
+const author = model('Author', authorSchema);
+
+model.export = author;
 // "authors": [
 //     {
 //       "slug": "cameron",

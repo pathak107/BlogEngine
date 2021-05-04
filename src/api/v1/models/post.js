@@ -1,3 +1,48 @@
+const { Schema, model } = require('mongoose');
+
+const postSchema = new Schema({
+    slug: String,
+    title: String,
+    description: String,
+    html: String,
+    markdown: String,
+    reading_time: Number,
+    views: Number,
+    author: Schema.Types.ObjectId, // an option in post api to specify auhor id to get all posts.
+    category: Schema.Types.ObjectId, // an option in post api specify category id to get all posts
+    feature_image: String,
+    premium: {
+        type: Boolean,
+        default: false,
+    },
+    published: {
+        type: Boolean,
+        default: true,
+    },
+    created_at: Date,
+    updated_at: Date,
+    published_at: Date,
+    codeinjection_head: String,
+    codeinjection_foot: String,
+    canonical_url: String,
+    send_email_when_published: Boolean,
+    // urls will always be of the form /post/:id not the entire https://blog.com/post/:id as
+    // the domain can change in future. Also even if we maintain the url in config.json
+    // but the post that are already created will still have old urls
+    // same for any other image url etc
+    url: String,
+    og_image_url: String,
+    og_title: String,
+    og_description: String,
+    twitter_image: String,
+    twitter_title: String,
+    twitter_description: String,
+    email_subject: String,
+});
+
+const post = model('Post', postSchema);
+
+model.export = post;
 // {
 //     "posts": [
 //       {
