@@ -9,10 +9,10 @@ const DOMPurify = createDOMPurify(window);
 
 const Post = require('../models/post');
 
-const fetchAllPosts = async (size, page, fields, published, premium, authorID, categoryID) => {
+const fetchAllPosts = async (
+    size, page, fields, published, premium, authorID, categoryID, include,
+) => {
     let query = {};
-    let promise;
-    let posts;
     if (published !== undefined) {
         query = { published };
     }
@@ -28,23 +28,22 @@ const fetchAllPosts = async (size, page, fields, published, premium, authorID, c
         query = { ...query, category: categoryID };
     }
 
+    let promise = Post.find(query).sort({ published_at: 'DESC' });
     if (fields !== undefined) {
         const select = fields.split(',').join(' ');
-        promise = Post.find(query).select(select);
-    } else {
-        promise = Post.find(query);
+        promise = promise.select(select);
+    }
+    if (include !== undefined) {
+        const populate = include.split(',').join(' ');
+        promise = promise.populate(populate);
     }
 
-    if (page === undefined || size === undefined) {
-        posts = await promise
-            .sort({ published_at: 'DESC' });
-    } else {
-        posts = await promise
+    if (page !== undefined && size !== undefined) {
+        promise = promise
             .limit(parseInt(size, 10))
-            .skip((parseInt(page, 10) - 1) * size)
-            .sort({ published_at: 'DESC' });
+            .skip((parseInt(page, 10) - 1) * size);
     }
-
+    const posts = await promise;
     return posts;
 };
 
@@ -86,20 +85,23 @@ const newPost = async (data) => {
     return post;
 };
 
-const fetchPost = async (postID, fields, slug) => {
+const fetchPost = async (postID, fields, slug, include) => {
     let query = {};
     if (slug === null && postID !== null) {
         query = { _id: postID };
     } else {
         query = { slug };
     }
-    let post;
+    let promise = Post.findOne(query);
+    if (include !== undefined) {
+        const populate = include.split(',').join(' ');
+        promise = promise.populate(populate);
+    }
     if (fields !== undefined) {
         const select = fields.split(',').join(' ');
-        post = await Post.findOne(query).select(select);
-    } else {
-        post = await Post.findOne(query);
+        promise = promise.select(select);
     }
+    const post = await promise;
     return post;
 };
 

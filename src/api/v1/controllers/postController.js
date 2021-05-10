@@ -2,12 +2,12 @@ const postService = require('../services/postService');
 
 const getAllPosts = async (req, res, next) => {
     const {
-        size, page, fields, published, premium, authorID, categoryID,
+        size, page, fields, published, premium, authorID, categoryID, include,
     } = req.query;
     let posts;
     try {
         posts = await postService.fetchAllPosts(
-            size, page, fields, published, premium, authorID, categoryID,
+            size, page, fields, published, premium, authorID, categoryID, include,
         );
     } catch (error) {
         next(error);
@@ -20,10 +20,10 @@ const getAllPosts = async (req, res, next) => {
 };
 
 const getPost = async (req, res, next) => {
-    const { fields } = req.query;
+    const { fields, include } = req.query;
     let post;
     try {
-        post = await postService.fetchPost(req.params.postID, fields, null);
+        post = await postService.fetchPost(req.params.postID, fields, null, include);
     } catch (error) {
         next(error);
         return res.end();

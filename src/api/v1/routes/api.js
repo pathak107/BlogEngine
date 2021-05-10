@@ -9,16 +9,7 @@ const auth = require('../middlewares/authMiddleware');
 // Importing controllers
 const postController = require('../controllers/postController');
 const adminController = require('../controllers/adminController');
-
-// Error Handling wrapper function
-// const callController = (controller) => async (req, res, next) => {
-//     try {
-//         controller(req, res, next);
-//     } catch (err) {
-//         console.log("asdasdsa");
-//         next(err);
-//     }
-// };
+const categoryController = require('../controllers/categoryController');
 
 // Posts endpoints
 router.get('/posts', postController.getAllPosts);
@@ -30,10 +21,22 @@ router.put('/posts/:postID', auth.adminVerify, postController.editPost);
 router.patch('/posts/publishToggle/:postID', auth.adminVerify, postController.togglePublish);
 router.delete('/posts/:postID', auth.adminVerify, postController.deletePost);
 
+// Category end points
+router.get('/category', categoryController.getAllCategories);
+router.get('/category/:catID', categoryController.getCategory);
+router.get('/category/slug/:slug', categoryController.getCategoryBySlug);
+router.post('/category', auth.adminVerify, categoryController.createCategory);
+router.put('/category/:catID', auth.adminVerify, categoryController.editCategory);
+router.delete('/category/:catID', auth.adminVerify, categoryController.deleteCategory);
+
+// auth endpoints
+router.post('/auth/admin/login', adminController.login);
+
 // Admin endpoints
-router.post('/admin/login', adminController.login);
-router.get('/admin/settings', auth.adminVerify, adminController.getSettings);
-router.put('/admin/settings', auth.adminVerify, adminController.editSettings);
+router.get('/settings', auth.adminVerify, adminController.getSettings);
+router.put('/settings', auth.adminVerify, adminController.editSettings);
+// router.patch('/admin/settings/logo', auth.adminVerify, adminController.getSettings);
+// router.patch('/admin/settings/coverImage', auth.adminVerify, adminController.getSettings);
 
 // Error handler function
 router.use((err, req, res, next) => {
