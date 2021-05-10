@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const categorySchema = new Schema({
-    slug: String,
+    slug: { type: String, unique: true },
     name: String,
     description: String,
     feature_image: String,

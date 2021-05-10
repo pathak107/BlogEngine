@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const pageSchema = new Schema({
-    slug: String,
+    slug: { type: String, unique: true },
     title: String,
     description: String,
     html: String,

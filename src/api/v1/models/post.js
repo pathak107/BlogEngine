@@ -1,19 +1,27 @@
 const { Schema, model } = require('mongoose');
 
 const postSchema = new Schema({
-    slug: String,
-    title: String,
-    description: String,
+    slug: { type: String, unique: true },
+    title: { type: String, required: true },
+    description: { type: String, required: true },
     html: String,
-    markdown: String,
-    reading_time: Number,
+    markdown: { type: String, required: true },
+    reading_time: { type: String, required: true },
     views: {
         type: Number,
         default: 0,
     },
-    author: Schema.Types.ObjectId, // an option in post api to specify auhor id to get all posts.
-    category: Schema.Types.ObjectId, // an option in post api specify category id to get all posts
-    feature_image: String,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'Author',
+        default: null,
+    }, // an option in post api to specify auhor id to get all posts.
+    category: {
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
+        required: true,
+    }, // an option in post api specify category id to get all posts
+    feature_image: { type: String, required: true },
     premium: {
         type: Boolean,
         default: false,

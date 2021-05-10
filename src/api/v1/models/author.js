@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const authorSchema = new Schema({
-    slug: String,
+    slug: { type: String, unique: true },
     name: String,
     profile_image: String, // url
     bio: String,

@@ -7,28 +7,42 @@ const DOMPurify = createDOMPurify(window);
 
 const Post = require('../models/post');
 
-const fetchAllPosts = async (size, page, fields, published) => {
-    let query;
+const fetchAllPosts = async (size, page, fields, published, premium, authorID, categoryID) => {
+    let query = {};
     let promise;
+    let posts;
     if (published !== undefined) {
         query = { published };
     }
+    if (premium !== undefined) {
+        query = { ...query, premium };
+    }
 
-    // if (fields !== undefined) {
-    //     const select = fields.split(',').join(' ');
-    //     post = await Post.findOne(query).select(select);
-    // } else {
-    //     post = await Post.findOne(query);
-    // }
+    if (authorID !== undefined) {
+        query = { ...query, author: authorID };
+    }
 
-    // if (page === undefined || size === undefined) {
-    //     promise=
-    // }
-    const posts = await Post.find({ query })
-        .limit(size)
-        .skip((page - 1) * size)
-        .sort({ published_at: 'DESC' })
-        .select(fields);
+    if (categoryID !== undefined) {
+        query = { ...query, category: categoryID };
+    }
+
+    if (fields !== undefined) {
+        const select = fields.split(',').join(' ');
+        promise = Post.find(query).select(select);
+    } else {
+        promise = Post.find(query);
+    }
+
+    if (page === undefined || size === undefined) {
+        posts = await promise
+            .sort({ published_at: 'DESC' });
+    } else {
+        posts = await promise
+            .limit(parseInt(size, 10))
+            .skip((parseInt(page, 10) - 1) * size)
+            .sort({ published_at: 'DESC' });
+    }
+
     return posts;
 };
 
@@ -114,6 +128,7 @@ const editPost = async (postID, data) => {
     post.published_at = publishDate;
     post.premium = data.premium;
     post.published = data.published;
+    post.updated_at = Date.now();
     post.codeinjection_head = data.codeinjection_head;
     post.codeinjection_foot = data.codeinjection_foot;
     post.canonical_url = data.canonical_url;
