@@ -21,7 +21,8 @@ const postSchema = new Schema({
         ref: 'Category',
         required: true,
     }, // an option in post api specify category id to get all posts
-    feature_image: { type: String, required: true },
+    feature_image_url: String,
+    feature_image_slug: String,
     premium: {
         type: Boolean,
         default: false,

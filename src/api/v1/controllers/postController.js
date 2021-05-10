@@ -123,6 +123,26 @@ const togglePublish = async (req, res, next) => {
     });
 };
 
+const uploadImage = async (req, res, next) => {
+    try {
+        await postService.uploadImage(req.params.postID, req.file.filename);
+    } catch (error) {
+        next(error);
+        return res.end();
+    }
+    return res.status(200).json({
+        status: 'success',
+        message: 'uploaded image successfully',
+    });
+};
+
 module.exports = {
-    getAllPosts, createPost, deletePost, editPost, getPost, getPostBySlug, togglePublish,
+    getAllPosts,
+    createPost,
+    deletePost,
+    editPost,
+    getPost,
+    getPostBySlug,
+    togglePublish,
+    uploadImage,
 };

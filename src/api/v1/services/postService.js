@@ -1,6 +1,8 @@
 const marked = require('marked');
 const slugify = require('slugify');
 const createDOMPurify = require('dompurify');
+const path = require('path');
+const { promises: fs } = require('fs');
 const { JSDOM } = require('jsdom');
 const { window } = new JSDOM('');
 const DOMPurify = createDOMPurify(window);
@@ -60,9 +62,10 @@ const newPost = async (data) => {
         html: sanitizedHtml,
         markdown: data.markdown,
         reading_time: data.reading_time,
-        // author: data.author_id,
-        // category: data.category_id,
-        feature_image: '/static/images/asd.jpeg',
+        author: data.author_id,
+        category: data.category_id,
+        feature_image_url: null,
+        feature_image_slug: null,
         published_at: publishDate,
         premium: data.premium,
         published: data.published,
@@ -71,10 +74,10 @@ const newPost = async (data) => {
         canonical_url: data.canonical_url,
         send_email_when_published: data.send_email_when_published,
         url: `/posts/${slug}`,
-        og_image_url: '/static/images/asd.jpeg',
+        og_image_url: null,
         og_title: data.title,
         og_description: data.description,
-        twitter_image: '/static/images/asd.jpeg',
+        twitter_image: null,
         twitter_title: data.title,
         twitter_description: data.description,
         email_subject: data.email_subject,
@@ -122,9 +125,8 @@ const editPost = async (postID, data) => {
     post.html = sanitizedHtml;
     post.markdown = data.markdown;
     post.reading_time = data.reading_time;
-    // author: data.author_id,
-    // category: data.category_id,
-    post.feature_image = '/static/images/asd.jpeg';
+    post.author = data.author_id;
+    post.category = data.category_id;
     post.published_at = publishDate;
     post.premium = data.premium;
     post.published = data.published;
@@ -134,10 +136,8 @@ const editPost = async (postID, data) => {
     post.canonical_url = data.canonical_url;
     post.send_email_when_published = data.send_email_when_published;
     post.url = `/posts/${slug}`;
-    post.og_image_url = '/static/images/asd.jpeg';
     post.og_title = data.title;
     post.og_description = data.description;
-    post.twitter_image = '/static/images/asd.jpeg';
     post.twitter_title = data.title;
     post.twitter_description = data.description;
     post.email_subject = data.email_subject;
@@ -147,7 +147,7 @@ const editPost = async (postID, data) => {
 
 const togglePublish = async (postID) => {
     const post = await Post.findById(postID);
-    if (post == null) {
+    if (post === null) {
         throw new ErrorEvent('post does not exists');
     }
     if (post.published === true) {
@@ -159,6 +159,22 @@ const togglePublish = async (postID) => {
     }
     await post.save();
 };
+
+const uploadImage = async (postID, filename) => {
+    const post = await Post.findById(postID);
+    if (post === null) {
+        throw new ErrorEvent('post does not exists');
+    }
+
+    if (post.feature_image_slug !== null) {
+        await fs.unlink(path.join(__dirname, `../../../public/uploads/${post.feature_image_slug}`));
+    }
+    post.feature_image_url = `/static/uploads/${filename}`;
+    post.feature_image_slug = filename;
+    post.og_image_url = `/static/uploads/${filename}`;
+    post.twitter_image = `/static/uploads/${filename}`;
+    await post.save();
+};
 module.exports = {
-    fetchAllPosts, newPost, deletePost, fetchPost, editPost, togglePublish,
+    fetchAllPosts, newPost, deletePost, fetchPost, editPost, togglePublish, uploadImage,
 };

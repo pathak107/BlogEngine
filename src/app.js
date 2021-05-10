@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const app = express();
 const helmet = require('helmet');
 const compression = require('compression');
@@ -21,6 +22,9 @@ app.use(compression());
 
 // configuring database
 configureDatabase();
+
+// Setting static middleware
+app.use('/static', express.static(path.join(__dirname, './public')));
 
 // Setting routes
 app.use('/bhoot/api/v1', apiRoutes);
