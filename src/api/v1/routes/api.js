@@ -30,8 +30,8 @@ router.delete('/posts/:postID', auth.adminVerify, postController.deletePost);
 
 // Admin endpoints
 router.post('/admin/login', adminController.login);
-router.get('/admin/settings', adminController.getSettings);
-router.put('/admin/settings', adminController.login);
+router.get('/admin/settings', auth.adminVerify, adminController.getSettings);
+router.put('/admin/settings', auth.adminVerify, adminController.editSettings);
 
 // Error handler function
 router.use((err, req, res, next) => {

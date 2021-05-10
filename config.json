@@ -1,45 +1,45 @@
 {
-    "database":{
-        "db_url":"localhost",
-        "db_username":null,
-        "db_password":null,
-        "db_port":27017
-    },
-    "admin":{
-        "admin_email":"admin@gmail.com",
-        "admin_password":"qwerty"
-    },
-    "meta":{
-        "title":"My blog name",
-        "description": "Description for my blog to show in meta description.",
-        "url": "https://myblog.com",
-        "logo": "https://myblog.com/content/images/2014/09/Ghost-Transparent-for-DARK-BG.png",
-        "cover_image": "https://myblog.com/content/images/2019/10/publication-cover.png",
-        "codeinjection_head": null,
-        "codeinjection_foot": "<script src=\"//rum-static.pingdom.net/pa-5d8850cd3a70310008000482.js\" async></script>",
-        "og_image": null,
-        "og_title": null,
-        "og_description": null,
-        "twitter_image": null,
-        "twitter_title": null,
-        "twitter_description": null
-    },
-    "social_media":{
-        "facebook": "fbusername",
-        "twitter": "@twitterusername",
-        "instagram": "@instausername",
-        "linkedin": "@lindinAcc",
-        "email": "@companysEmailID"
-    },
-    "email_settings" : {
-        "api_key": "fasdf234124234sf232r2ga34f",
-        "host":"",
-        "username":"",
-        "password":""
-    },
-    "razorpay_settings":{
-        "api_key":"fasdf234124234sf232r2ga34f",
-        "username": "",
-        "password":""
-    }
+  "database": {
+    "db_url": "localhost",
+    "db_username": null,
+    "db_password": null,
+    "db_port": 27017
+  },
+  "admin": {
+    "admin_email": "shubhampathak@gmail.com",
+    "admin_password": "somedifficultPassword"
+  },
+  "meta": {
+    "title": "My blog name",
+    "description": "Description for my blog to show in meta description.",
+    "url": "https://myblog.com",
+    "logo": "https://myblog.com/content/images/2014/09/Ghost-Transparent-for-DARK-BG.png",
+    "cover_image": "https://myblog.com/content/images/2019/10/publication-cover.png",
+    "codeinjection_head": null,
+    "codeinjection_foot": "<script src=\"//rum-static.pingdom.net/pa-5d8850cd3a70310008000482.js\" async></script>",
+    "og_image": null,
+    "og_title": null,
+    "og_description": null,
+    "twitter_image": null,
+    "twitter_title": null,
+    "twitter_description": null
+  },
+  "social_media": {
+    "facebook": "fbusername",
+    "twitter": "@twitterusername",
+    "instagram": "@instausername",
+    "linkedin": "@lindinAcc",
+    "email": "@companysEmailID"
+  },
+  "email_settings": {
+    "api_key": "fasdf234124234sf232r2ga34f",
+    "host": "",
+    "username": "",
+    "password": ""
+  },
+  "razorpay_settings": {
+    "api_key": "fasdf234124234sf232r2ga34f",
+    "username": "",
+    "password": ""
+  }
 }

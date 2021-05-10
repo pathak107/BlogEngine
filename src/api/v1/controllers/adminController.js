@@ -23,4 +23,17 @@ const getSettings = (req, res) => {
     });
 };
 
-module.exports = { login, getSettings };
+const editSettings = async (req, res, next) => {
+    try {
+        await adminService.editSettings(req.body.settings);
+    } catch (error) {
+        next(error);
+        return res.end();
+    }
+    return res.status(200).json({
+        status: 'success',
+        message: 'settings were updated successfully',
+    });
+};
+
+module.exports = { login, getSettings, editSettings };
