@@ -2,19 +2,29 @@ const slugify = require('slugify');
 const Category = require('../models/category');
 const config = require('../../../../config.json');
 
-const getAllCategories = async () => {
-    const categories = await Category.find();
+const getAllCategories = async (fields) => {
+    let promise = Category.find();
+    if (fields !== undefined) {
+        const select = fields.split(',').join(' ');
+        promise = promise.select(select);
+    }
+    const categories = await promise;
     return categories;
 };
 
-const getCategory = async (catID, slug) => {
+const getCategory = async (catID, slug, fields) => {
     let query = {};
     if (catID !== null) {
         query = { _id: catID };
     } else {
         query = { slug };
     }
-    const category = await Category.findOne(query);
+    let promise = Category.findOne(query);
+    if (fields !== undefined) {
+        const select = fields.split(',').join(' ');
+        promise = promise.select(select);
+    }
+    const category = await promise;
     return category;
 };
 

@@ -29,6 +29,12 @@ app.use('/static', express.static(path.join(__dirname, './public')));
 // Setting routes
 app.use('/bhoot/api/v1', apiRoutes);
 
+// 404 handler
+app.use((req, res) => res.status(404).json({
+    status: 'failure',
+    message: 'invalid url',
+}));
+
 // starting express server
 app.listen(process.env.PORT || 3000, async () => {
     logger.info('Server started.');

@@ -102,6 +102,8 @@ const fetchPost = async (postID, fields, slug, include) => {
         promise = promise.select(select);
     }
     const post = await promise;
+    post.views += 1;
+    post.save();
     return post;
 };
 

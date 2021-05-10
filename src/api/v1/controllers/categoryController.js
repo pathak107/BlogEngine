@@ -3,7 +3,7 @@ const categoryService = require('../services/categoryService');
 const getAllCategories = async (req, res, next) => {
     let categories;
     try {
-        categories = await categoryService.getAllCategories();
+        categories = await categoryService.getAllCategories(req.query.fields);
     } catch (error) {
         next(error);
         return res.end();
@@ -17,7 +17,7 @@ const getAllCategories = async (req, res, next) => {
 const getCategory = async (req, res, next) => {
     let category;
     try {
-        category = await categoryService.getCategory(req.params.catID, null);
+        category = await categoryService.getCategory(req.params.catID, null, req.query.fields);
     } catch (error) {
         next(error);
         return res.end();
@@ -37,7 +37,7 @@ const getCategory = async (req, res, next) => {
 const getCategoryBySlug = async (req, res, next) => {
     let category;
     try {
-        category = await categoryService.getCategory(null, req.params.slug);
+        category = await categoryService.getCategory(null, req.params.slug, req.query.fields);
     } catch (error) {
         next(error);
         return res.end();

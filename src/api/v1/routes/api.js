@@ -10,6 +10,8 @@ const auth = require('../middlewares/authMiddleware');
 const postController = require('../controllers/postController');
 const adminController = require('../controllers/adminController');
 const categoryController = require('../controllers/categoryController');
+const authorController = require('../controllers/authorController');
+const commentController = require('../controllers/commentController');
 
 // Posts endpoints
 router.get('/posts', postController.getAllPosts);
@@ -29,6 +31,21 @@ router.post('/category', auth.adminVerify, categoryController.createCategory);
 router.put('/category/:catID', auth.adminVerify, categoryController.editCategory);
 router.delete('/category/:catID', auth.adminVerify, categoryController.deleteCategory);
 
+// Author end points
+router.get('/author', authorController.getAllAuthors);
+router.get('/author/:authorID', authorController.getAuthor);
+router.get('/author/slug/:slug', authorController.getAuthorBySlug);
+router.post('/author', auth.adminVerify, authorController.createAuthor);
+router.put('/author/:authorID', auth.adminVerify, authorController.editAuthor);
+router.delete('/author/:authorID', auth.adminVerify, authorController.deleteAuthor);
+
+// Comment end points
+router.get('/comment', commentController.getAllComments);
+// router.get('/comment/:commentID');
+// router.delete('/comment/:commentID');
+// router.patch('/comment/:commentID');
+router.post('/comment', commentController.createComment);
+
 // auth endpoints
 router.post('/auth/admin/login', adminController.login);
 
@@ -37,6 +54,12 @@ router.get('/settings', auth.adminVerify, adminController.getSettings);
 router.put('/settings', auth.adminVerify, adminController.editSettings);
 // router.patch('/admin/settings/logo', auth.adminVerify, adminController.getSettings);
 // router.patch('/admin/settings/coverImage', auth.adminVerify, adminController.getSettings);
+
+// 404 handler
+router.use((req, res) => res.status(404).json({
+    status: 'failure',
+    message: 'invalid url',
+}));
 
 // Error handler function
 router.use((err, req, res, next) => {
