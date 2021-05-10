@@ -4,17 +4,22 @@
   "description": "A blogging engine inspired by ghostJs",
   "main": "./src/app.js",
   "scripts": {
-    "start": "node ./src/app.js",
+    "start": "nodemon ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Shubham Pathak",
   "license": "ISC",
   "dependencies": {
     "compression": "^1.7.4",
+    "dompurify": "^2.2.8",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
+    "jsdom": "^16.5.3",
+    "jsonwebtoken": "^8.5.1",
+    "marked": "^2.0.3",
     "mongoose": "^5.12.7",
+    "slugify": "^1.5.2",
     "winston": "^3.3.3"
   },
   "devDependencies": {

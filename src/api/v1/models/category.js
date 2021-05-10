@@ -19,7 +19,7 @@ const categorySchema = new Schema({
 
 const category = model('Category', categorySchema);
 
-model.export = category;
+module.exports = category;
 // "Category":
 //     {
 //       "slug": "getting-started",

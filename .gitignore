@@ -14,3 +14,4 @@ node_modules/
 # dotenv environment variables file
 .env
 
+# add config.json while in production

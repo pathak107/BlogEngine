@@ -5,3 +5,4 @@
 // ex a subscription variable which will determine the validity and a
 // premiumUser variable for true or false and will mail notification to premiumUsers
 // when a new premium post is posted
+// Will alos store an end_date of subscription to find out whether the subsctiption is valid or not

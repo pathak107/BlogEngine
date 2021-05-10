@@ -13,7 +13,7 @@ const authorSchema = new Schema({
 
 const author = model('Author', authorSchema);
 
-model.export = author;
+module.exports = author;
 // "authors": [
 //     {
 //       "slug": "cameron",

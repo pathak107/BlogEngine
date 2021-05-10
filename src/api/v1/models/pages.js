@@ -28,4 +28,4 @@ const pageSchema = new Schema({
 
 const page = model('Page', pageSchema);
 
-model.export = page;
+module.exports = page;

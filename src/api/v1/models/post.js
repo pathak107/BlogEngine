@@ -7,7 +7,10 @@ const postSchema = new Schema({
     html: String,
     markdown: String,
     reading_time: Number,
-    views: Number,
+    views: {
+        type: Number,
+        default: 0,
+    },
     author: Schema.Types.ObjectId, // an option in post api to specify auhor id to get all posts.
     category: Schema.Types.ObjectId, // an option in post api specify category id to get all posts
     feature_image: String,
@@ -19,8 +22,8 @@ const postSchema = new Schema({
         type: Boolean,
         default: true,
     },
-    created_at: Date,
-    updated_at: Date,
+    created_at: { type: Date, default: Date.now() },
+    updated_at: { type: Date, default: Date.now() },
     published_at: Date,
     codeinjection_head: String,
     codeinjection_foot: String,
@@ -42,7 +45,7 @@ const postSchema = new Schema({
 
 const post = model('Post', postSchema);
 
-model.export = post;
+module.exports = post;
 // {
 //     "posts": [
 //       {
