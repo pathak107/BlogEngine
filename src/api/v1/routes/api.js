@@ -41,17 +41,15 @@ router.delete('/author/:authorID', auth.adminVerify, authorController.deleteAuth
 
 // Comment end points
 router.get('/comment', commentController.getAllComments);
-// router.get('/comment/:commentID');
 // router.delete('/comment/:commentID');
-// router.patch('/comment/:commentID');
+// router.patch('/comment/:commentID', auth.verifyUser);
 router.post('/comment', commentController.createComment);
 
-// auth endpoints
-router.post('/auth/admin/login', adminController.login);
-
 // Admin endpoints
-router.get('/settings', auth.adminVerify, adminController.getSettings);
-router.put('/settings', auth.adminVerify, adminController.editSettings);
+router.post('/admin/login', adminController.login);
+router.get('/admin/posts', auth.adminVerify, adminController.getAllPosts);
+router.get('/admin/settings', auth.adminVerify, adminController.getSettings);
+router.put('/admin/settings', auth.adminVerify, adminController.editSettings);
 // router.patch('/admin/settings/logo', auth.adminVerify, adminController.getSettings);
 // router.patch('/admin/settings/coverImage', auth.adminVerify, adminController.getSettings);
 

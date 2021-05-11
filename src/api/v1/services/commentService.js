@@ -23,4 +23,22 @@ const createComment = async (data, userData) => {
     return comment;
 };
 
-module.exports = { createComment, getAllComments };
+const deleteComment = async (commentID, userID) => {
+    const deleted = await Comment.deleteOne({ _id: commentID, user_id: userID });
+    return deleted.deletedCount;
+};
+
+const editComment = async (commentID, editedComment, userID) => {
+    let comment = await Comment.findOne({ _id: commentID, user_id: userID });
+    if (comment === null) {
+        throw new Error('Comment does not exists.');
+    }
+    comment.comment = editedComment;
+
+    comment = await comment.save();
+    return comment;
+};
+
+module.exports = {
+    createComment, getAllComments, deleteComment, editComment,
+};

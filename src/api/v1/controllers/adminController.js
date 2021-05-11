@@ -1,4 +1,5 @@
 const adminService = require('../services/adminService');
+const postService = require('../services/postService');
 
 const login = (req, res) => {
     const { email, password } = req.body;
@@ -36,4 +37,25 @@ const editSettings = async (req, res, next) => {
     });
 };
 
-module.exports = { login, getSettings, editSettings };
+const getAllPosts = async (req, res, next) => {
+    const {
+        size, page, fields, premium, authorID, categoryID, include, published,
+    } = req.query;
+    let posts;
+    try {
+        posts = await postService.fetchAllPosts(
+            size, page, fields, published, premium, authorID, categoryID, include,
+        );
+    } catch (error) {
+        next(error);
+        return res.end();
+    }
+    return res.status(200).json({
+        status: 'success',
+        posts,
+    });
+};
+
+module.exports = {
+    login, getSettings, editSettings, getAllPosts,
+};

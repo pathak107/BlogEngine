@@ -28,11 +28,13 @@ const fetchAllPosts = async (
         query = { ...query, category: categoryID };
     }
 
-    let promise = Post.find(query).sort({ published_at: 'DESC' });
+    let select = '-html -markdown';
     if (fields !== undefined) {
-        const select = fields.split(',').join(' ');
-        promise = promise.select(select);
+        select = fields.split(',').filter((field) => (field !== 'html' && field !== 'markdown')).join(' ');
     }
+
+    let promise = Post.find(query).sort({ published_at: 'DESC' }).select(select);
+
     if (include !== undefined) {
         const populate = include.split(',').join(' ');
         promise = promise.populate(populate);
@@ -85,7 +87,7 @@ const newPost = async (data) => {
     return post;
 };
 
-const fetchPost = async (postID, fields, slug, include) => {
+const fetchPost = async (postID, fields, slug, include, authorizedForPremium) => {
     let query = {};
     if (slug === null && postID !== null) {
         query = { _id: postID };
@@ -102,6 +104,10 @@ const fetchPost = async (postID, fields, slug, include) => {
         promise = promise.select(select);
     }
     const post = await promise;
+
+    if (post.premium === true && (!authorizedForPremium)) {
+        throw new Error('User not authorized for premium content.');
+    }
     post.views += 1;
     post.save();
     return post;

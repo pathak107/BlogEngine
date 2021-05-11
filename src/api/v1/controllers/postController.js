@@ -1,9 +1,11 @@
 const postService = require('../services/postService');
+const { isUserValidForPremium } = require('../validations/validPremiumUser');
 
 const getAllPosts = async (req, res, next) => {
     const {
-        size, page, fields, published, premium, authorID, categoryID, include,
+        size, page, fields, premium, authorID, categoryID, include,
     } = req.query;
+    const published = true;
     let posts;
     try {
         posts = await postService.fetchAllPosts(
@@ -22,8 +24,10 @@ const getAllPosts = async (req, res, next) => {
 const getPost = async (req, res, next) => {
     const { fields, include } = req.query;
     let post;
+    // send user id in this function as parameter
+    const premium = isUserValidForPremium();
     try {
-        post = await postService.fetchPost(req.params.postID, fields, null, include);
+        post = await postService.fetchPost(req.params.postID, fields, null, include, premium);
     } catch (error) {
         next(error);
         return res.end();
@@ -43,8 +47,9 @@ const getPost = async (req, res, next) => {
 const getPostBySlug = async (req, res, next) => {
     const { fields } = req.query;
     let post;
+    const premium = isUserValidForPremium();
     try {
-        post = await postService.fetchPost(null, fields, req.params.slug);
+        post = await postService.fetchPost(null, fields, req.params.slug, premium);
     } catch (error) {
         next(error);
         return res.end();
