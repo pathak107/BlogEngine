@@ -1,4 +1,5 @@
 const postService = require('../services/postService');
+const imageProcessing = require('../services/imageProcessing');
 const { isUserValidForPremium } = require('../validations/validPremiumUser');
 
 const getAllPosts = async (req, res, next) => {
@@ -129,8 +130,10 @@ const togglePublish = async (req, res, next) => {
 };
 
 const uploadImage = async (req, res, next) => {
+    const filename = `${Date.now()}`;
     try {
-        await postService.uploadImage(req.params.postID, req.file.filename);
+        await imageProcessing.compressImage(req.file.buffer, filename);
+        await postService.uploadImage(req.params.postID, filename);
     } catch (error) {
         next(error);
         return res.end();
