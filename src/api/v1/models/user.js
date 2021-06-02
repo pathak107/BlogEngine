@@ -6,3 +6,18 @@
 // premiumUser variable for true or false and will mail notification to premiumUsers
 // when a new premium post is posted
 // Will alos store an end_date of subscription to find out whether the subsctiption is valid or not
+const { Schema, model } = require('mongoose');
+
+const userSchema = new Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, default: null }, // url
+    subscription_id: { type: Schema.Types.ObjectId, default: null },
+    subscription_start_date: { type: Date, default: null },
+    subscription_end_date: { type: Date, default: null },
+
+});
+
+const user = model('User', userSchema);
+
+module.exports = user;

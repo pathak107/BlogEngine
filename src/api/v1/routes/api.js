@@ -17,6 +17,7 @@ const commentController = require('../controllers/commentController');
 router.get('/posts', postController.getAllPosts);
 router.get('/posts/:postID', postController.getPost);
 router.get('/posts/slug/:slug', postController.getPostBySlug);
+
 router.post('/posts', auth.adminVerify, postController.createPost);
 router.post('/posts/feature_image/:postID', auth.adminVerify, upload.single('feature_image'), postController.uploadImage);
 router.put('/posts/:postID', auth.adminVerify, postController.editPost);
@@ -27,6 +28,7 @@ router.delete('/posts/:postID', auth.adminVerify, postController.deletePost);
 router.get('/category', categoryController.getAllCategories);
 router.get('/category/:catID', categoryController.getCategory);
 router.get('/category/slug/:slug', categoryController.getCategoryBySlug);
+
 router.post('/category', auth.adminVerify, categoryController.createCategory);
 router.put('/category/:catID', auth.adminVerify, categoryController.editCategory);
 router.delete('/category/:catID', auth.adminVerify, categoryController.deleteCategory);
@@ -35,6 +37,7 @@ router.delete('/category/:catID', auth.adminVerify, categoryController.deleteCat
 router.get('/author', authorController.getAllAuthors);
 router.get('/author/:authorID', authorController.getAuthor);
 router.get('/author/slug/:slug', authorController.getAuthorBySlug);
+
 router.post('/author', auth.adminVerify, authorController.createAuthor);
 router.put('/author/:authorID', auth.adminVerify, authorController.editAuthor);
 router.delete('/author/:authorID', auth.adminVerify, authorController.deleteAuthor);

@@ -1,5 +1,5 @@
 const postService = require('../services/postService');
-const imageProcessing = require('../services/imageProcessing');
+const imageProcessing = require('../helpers/imageProcessing');
 const { isUserValidForPremium } = require('../validations/validPremiumUser');
 
 const getAllPosts = async (req, res, next) => {
