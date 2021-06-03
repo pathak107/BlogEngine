@@ -14,10 +14,6 @@ app.use(compression());
 // Setting static middleware
 app.use('/static', express.static(path.join(__dirname, './public'), { maxage: 31557600 }));
 
-// Setting view enginer
-app.set('views', path.join(__dirname, './client/views'));
-app.set('view engine', 'ejs');
-
 // Setting middleware for secure http headers
 app.use(helmet());
 
