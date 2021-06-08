@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const { logger } = require('./logger');
-const config = require('../../config.json');
+const { loadSettings } = require('../api/v1/services/settingsService');
 
 const configureDatabase = async () => {
     try {
         let mongoUrl;
-        if (config.database.db_username !== null && config.database.db_password !== null) {
-            mongoUrl = `mongodb://${config.database.db_username}:${config.database.db_password}@${config.database.db_url}:${config.database.db_port}/BhootBlog`;
+        if (process.env.DB_USERNAME && process.env.DB_PASSWORD) {
+            mongoUrl = `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}:${process.env.DB_PORT}/BhootBlog`;
         } else {
-            mongoUrl = `mongodb://${config.database.db_url}:${config.database.db_port}/BhootBlog`;
+            mongoUrl = `mongodb://${process.env.DB_URL}:${process.env.db_port}/BhootBlog`;
         }
         await mongoose.connect(mongoUrl,
             {
@@ -16,6 +16,7 @@ const configureDatabase = async () => {
                 useCreateIndex: true,
                 useUnifiedTopology: true,
             });
+        loadSettings();
         logger.info('Connected to database successfully.');
     } catch (error) {
         logger.error(error);

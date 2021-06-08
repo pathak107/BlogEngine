@@ -10,16 +10,12 @@ const DOMPurify = createDOMPurify(window);
 const Post = require('../models/post');
 
 const fetchAllPosts = async (
-    size, page, fields, published, premium, authorID, categoryID, include,
+    size, page, fields, published, authorID, categoryID, include, sort,
 ) => {
     let query = {};
     if (published !== undefined) {
         query = { published };
     }
-    if (premium !== undefined) {
-        query = { ...query, premium };
-    }
-
     if (authorID !== undefined) {
         query = { ...query, author: authorID };
     }
@@ -33,7 +29,11 @@ const fetchAllPosts = async (
         select = fields.split(',').filter((field) => (field !== 'html' && field !== 'markdown')).join(' ');
     }
 
-    let promise = Post.find(query).sort({ published_at: 'DESC' }).select(select);
+    let sortQuery = { published_at: 'DESC' };
+    if (sort === 'views') {
+        sortQuery = { view: 'DESC' };
+    }
+    let promise = Post.find(query).sort(sortQuery).select(select);
 
     if (include !== undefined) {
         const populate = include.split(',').join(' ');
@@ -68,7 +68,6 @@ const newPost = async (data) => {
         feature_image_url: null,
         feature_image_slug: null,
         published_at: publishDate,
-        premium: data.premium,
         published: data.published,
         codeinjection_head: data.codeinjection_head,
         codeinjection_foot: data.codeinjection_foot,
@@ -87,7 +86,7 @@ const newPost = async (data) => {
     return post;
 };
 
-const fetchPost = async (postID, fields, slug, include, authorizedForPremium) => {
+const fetchPost = async (postID, fields, slug, include) => {
     let query = {};
     if (slug === null && postID !== null) {
         query = { _id: postID };
@@ -105,9 +104,6 @@ const fetchPost = async (postID, fields, slug, include, authorizedForPremium) =>
     }
     const post = await promise;
 
-    if (post.premium === true && (!authorizedForPremium)) {
-        throw new Error('User not authorized for premium content.');
-    }
     post.views += 1;
     post.save();
     return post;
@@ -138,7 +134,6 @@ const editPost = async (postID, data) => {
     post.author = data.author_id;
     post.category = data.category_id;
     post.published_at = publishDate;
-    post.premium = data.premium;
     post.published = data.published;
     post.updated_at = Date.now();
     post.codeinjection_head = data.codeinjection_head;

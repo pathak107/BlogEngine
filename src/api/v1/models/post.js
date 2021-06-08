@@ -23,10 +23,6 @@ const postSchema = new Schema({
     }, // an option in post api specify category id to get all posts
     feature_image_url: { type: String, default: null },
     feature_image_slug: { type: String, default: null },
-    premium: {
-        type: Boolean,
-        default: false,
-    },
     published: {
         type: Boolean,
         default: true,

@@ -44,17 +44,19 @@ router.delete('/author/:authorID', auth.adminVerify, authorController.deleteAuth
 
 // Comment end points
 router.get('/comment', commentController.getAllComments);
-// router.delete('/comment/:commentID');
-// router.patch('/comment/:commentID', auth.verifyUser);
+router.delete('/comment/:commentID', commentController.deleteComment);
+router.patch('/comment/:commentID', commentController.editComment);
 router.post('/comment', commentController.createComment);
 
 // Admin endpoints
 router.post('/admin/login', adminController.login);
+router.post('/admin/register', adminController.register);
 router.get('/admin/posts', auth.adminVerify, adminController.getAllPosts);
 router.get('/admin/settings', auth.adminVerify, adminController.getSettings);
-router.put('/admin/settings', auth.adminVerify, adminController.editSettings);
-// router.patch('/admin/settings/logo', auth.adminVerify, adminController.getSettings);
-// router.patch('/admin/settings/coverImage', auth.adminVerify, adminController.getSettings);
+router.post('/admin/settings', auth.adminVerify, adminController.createSettings);
+router.patch('/admin/settings', auth.adminVerify, adminController.editSettings);
+router.post('/admin/settings/logo', auth.adminVerify, upload.single('logo'), adminController.uploadLogo);
+router.post('/admin/settings/coverImage', auth.adminVerify, upload.single('cover_image'), adminController.uploadImage);
 
 // 404 handler
 router.use((req, res) => res.status(404).json({

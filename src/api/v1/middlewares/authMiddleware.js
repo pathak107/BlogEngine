@@ -1,17 +1,46 @@
 const jwt = require('jsonwebtoken');
-const config = require('../../../../config.json');
 const { logger } = require('../../../config/logger');
 
-const adminVerify = (req, res, next) => {
+const tokenVerification = (req) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const decoded = jwt.verify(token, config.admin.admin_password);
-        req.adminData = decoded;
-        next();
+        const authHeader = req.headers.authorization;
+        const token = authHeader.split(' ')[1];
+        const userData = jwt.verify(token, process.env.JWT_SECRET);
+        return { valid: true, userData };
     } catch (error) {
         logger.error(error);
-        next(Error('User not authenticated. Try logging in and try again.'));
+        return { valid: false };
     }
 };
 
-module.exports = { adminVerify };
+const adminVerify = (req, res, next) => {
+    const token = tokenVerification(req);
+    if (token.valid === true && token.userData.role === 'ADMIN') {
+        req.userData = token.userData;
+        next();
+    } else {
+        next(Error('User not authorized. Try logging in and try again.'));
+    }
+};
+
+const editorVerify = (req, res, next) => {
+    const token = tokenVerification(req);
+    if (token.valid === true && token.userData.role === 'EDITOR') {
+        req.userData = token.userData;
+        next();
+    } else {
+        next(Error('User not authorized. Try logging in and try again.'));
+    }
+};
+
+const editorOrAdminVerify = (req, res, next) => {
+    const token = tokenVerification(req);
+    if (token.valid === true && (token.userData.role === 'EDITOR' || token.userData.role === 'ADMIN')) {
+        req.userData = token.userData;
+        next();
+    } else {
+        next(Error('User not authorized. Try logging in and try again.'));
+    }
+};
+
+module.exports = { adminVerify, editorVerify, editorOrAdminVerify };

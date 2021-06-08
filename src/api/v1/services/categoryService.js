@@ -1,6 +1,6 @@
 const slugify = require('slugify');
 const Category = require('../models/category');
-const config = require('../../../../config.json');
+const { settings } = require('./settingsService');
 
 const getAllCategories = async (fields) => {
     let promise = Category.find();
@@ -39,11 +39,11 @@ const createCategory = async (data) => {
         slug,
         name: data.name,
         description: data.description,
-        feature_image: config.meta.cover_image,
-        og_image: config.meta.cover_image,
+        feature_image: settings.cover_image_url,
+        og_image: settings.cover_image_url,
         og_title: data.name,
         og_description: data.description,
-        twitter_image: config.meta.cover_image,
+        twitter_image: settings.cover_image_url,
         twitter_title: data.name,
         twitter_description: data.description,
         codeinjection_head: data.codeinjection_head,
@@ -64,11 +64,11 @@ const editCategory = async (catID, data) => {
     category.slug = slug;
     category.name = data.name;
     category.description = data.description;
-    category.feature_image = config.meta.cover_image;
-    category.og_image = config.meta.cover_image;
+    category.feature_image = settings.cover_image_url;
+    category.og_image = settings.cover_image_url;
     category.og_title = data.name;
     category.og_description = data.description;
-    category.twitter_image = config.meta.cover_image;
+    category.twitter_image = settings.cover_image_url;
     category.twitter_title = data.name;
     category.twitter_description = data.description;
     category.codeinjection_head = data.codeinjection_head;

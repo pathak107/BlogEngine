@@ -1,16 +1,15 @@
 const postService = require('../services/postService');
 const imageProcessing = require('../helpers/imageProcessing');
-const { isUserValidForPremium } = require('../validations/validPremiumUser');
 
 const getAllPosts = async (req, res, next) => {
     const {
-        size, page, fields, premium, authorID, categoryID, include,
+        size, page, fields, authorID, categoryID, include, sort,
     } = req.query;
-    const published = true;
+    const published = true; // because client should not have access to drafts
     let posts;
     try {
         posts = await postService.fetchAllPosts(
-            size, page, fields, published, premium, authorID, categoryID, include,
+            size, page, fields, published, authorID, categoryID, include, sort,
         );
     } catch (error) {
         next(error);
@@ -25,10 +24,8 @@ const getAllPosts = async (req, res, next) => {
 const getPost = async (req, res, next) => {
     const { fields, include } = req.query;
     let post;
-    // send user id in this function as parameter
-    const premium = isUserValidForPremium();
     try {
-        post = await postService.fetchPost(req.params.postID, fields, null, include, premium);
+        post = await postService.fetchPost(req.params.postID, fields, null, include);
     } catch (error) {
         next(error);
         return res.end();
@@ -48,9 +45,8 @@ const getPost = async (req, res, next) => {
 const getPostBySlug = async (req, res, next) => {
     const { fields } = req.query;
     let post;
-    const premium = isUserValidForPremium();
     try {
-        post = await postService.fetchPost(null, fields, req.params.slug, premium);
+        post = await postService.fetchPost(null, fields, req.params.slug);
     } catch (error) {
         next(error);
         return res.end();

@@ -10,12 +10,13 @@ const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema({
     name: { type: String, required: true },
-    email: { type: String, required: true },
-    password: { type: String, default: null }, // url
-    subscription_id: { type: Schema.Types.ObjectId, default: null },
-    subscription_start_date: { type: Date, default: null },
-    subscription_end_date: { type: Date, default: null },
-
+    email: { type: String, required: true, unique: true },
+    password: { type: String, default: null, required: true },
+    // Two roles will be ther 'Admin' and 'Editor'
+    // Editor will only have the access to create or edit a post
+    role: {
+        type: String, default: 'EDITOR',
+    },
 });
 
 const user = model('User', userSchema);

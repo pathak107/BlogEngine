@@ -11,6 +11,9 @@ const apiRoutes = require('./api/v1/routes/api');
 // This middleware should always be before express.static
 app.use(compression());
 
+// For reverse proxy like nginx
+app.set('trust proxy', true);
+
 // Setting static middleware
 app.use('/static', express.static(path.join(__dirname, './public'), { maxage: 31557600 }));
 

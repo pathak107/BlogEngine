@@ -1,7 +1,8 @@
 const { Schema, model } = require('mongoose');
 
 const commentSchema = new Schema({
-    user_id: { type: Schema.Types.ObjectId, default: null },
+    // Hashed IP address of user for uniqueness even if someone is anonymous
+    user_IP: { type: String, default: null },
     post_id: { type: Schema.Types.ObjectId, required: true },
     name: {
         type: String,

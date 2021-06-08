@@ -1,34 +1,53 @@
 const jwt = require('jsonwebtoken');
-const { promises: fs } = require('fs');
-const path = require('path');
-const config = require('../../../../config.json');
-const validator = require('../validations/validConfig');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const User = require('../models/user');
 
-const verifyAdmin = (email, password) => {
-    if (email === config.admin.admin_email && password === config.admin.admin_password) {
-        const token = jwt.sign({},
-            config.admin.admin_password,
-            {
-                expiresIn: '30d',
-            });
+const createToken = (user) => {
+    const tokenSignature = {
+        name: user.name,
+        email: user.email,
+        role: user.role,
+    };
+    const token = jwt.sign(tokenSignature,
+        process.env.JWT_SECRET,
+        {
+            expiresIn: '30d',
+        });
+    return token;
+};
+
+const registerUser = async (name, email, password) => {
+    const admin = await User.find({ role: 'ADMIN' });
+    let role;
+    if (admin.length === 0) {
+        role = 'ADMIN';
+    } else {
+        role = 'EDITOR';
+    }
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const user = new User({
+        name,
+        email,
+        password: hashedPassword,
+        role,
+    });
+    const token = createToken(user);
+    await user.save();
+    return token;
+};
+
+const verifyUser = async (email, password) => {
+    const user = await User.findOne({ email });
+    if (user !== null) {
+        // verify password using bcrypt
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            return null;
+        }
+        const token = createToken(user);
         return token;
     }
     return null;
 };
-
-const getSettings = () => config;
-
-const editSettings = async (newConfig) => {
-    const filePath = '../../../../config.json';
-    const isValid = validator.isConfigValid(config, newConfig);
-    if (!isValid) {
-        throw new Error('Config format is not supported');
-    }
-    try {
-        await fs.writeFile(path.join(__dirname, filePath), JSON.stringify(newConfig, null, 2));
-    } catch (error) {
-        throw new Error('Some error occured while updating config file');
-    }
-};
-
-module.exports = { verifyAdmin, getSettings, editSettings };
+module.exports = { verifyUser, registerUser };

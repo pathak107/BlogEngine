@@ -10,26 +10,27 @@ const getAllComments = async (postID) => {
     return comments;
 };
 
-const createComment = async (data, userData) => {
+const createComment = async (data, userIP) => {
     let commentData = {
+        user_IP: userIP,
         post_id: data.post_id,
         comment: data.comment,
     };
-    if (userData !== undefined) {
-        commentData = { ...commentData, name: userData.name, user_id: userData.userID };
+    if (data.name) {
+        commentData = { ...commentData, name: data.name };
     }
     let comment = new Comment(commentData);
     comment = await comment.save();
     return comment;
 };
 
-const deleteComment = async (commentID, userID) => {
-    const deleted = await Comment.deleteOne({ _id: commentID, user_id: userID });
+const deleteComment = async (commentID, userIP) => {
+    const deleted = await Comment.deleteOne({ _id: commentID, user_IP: userIP });
     return deleted.deletedCount;
 };
 
-const editComment = async (commentID, editedComment, userID) => {
-    let comment = await Comment.findOne({ _id: commentID, user_id: userID });
+const editComment = async (commentID, editedComment, userIP) => {
+    let comment = await Comment.findOne({ _id: commentID, user_IP: userIP });
     if (comment === null) {
         throw new Error('Comment does not exists.');
     }
