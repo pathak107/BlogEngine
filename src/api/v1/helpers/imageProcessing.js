@@ -8,4 +8,12 @@ const compressImage = async (inputBuffer, filename) => {
         .toFile(path.join(__dirname, `../../../public/uploads/${filename}.jpeg`));
 };
 
-module.exports = { compressImage };
+const compressLogo = async (inputBuffer, filename) => {
+    await sharp(inputBuffer)
+        .resize(250, 250, { fit: 'inside' })
+        .toFormat('jpeg')
+        .jpeg({ quality: 70 })
+        .toFile(path.join(__dirname, `../../../public/uploads/${filename}.jpeg`));
+};
+
+module.exports = { compressImage, compressLogo };

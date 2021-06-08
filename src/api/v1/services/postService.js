@@ -168,11 +168,11 @@ const togglePublish = async (postID) => {
 const uploadImage = async (postID, filename) => {
     const post = await Post.findById(postID);
     if (post === null) {
-        throw new ErrorEvent('post does not exists');
+        throw new Error('post does not exists');
     }
 
     if (post.feature_image_slug !== null) {
-        await fs.unlink(path.join(__dirname, `../../../public/uploads/${post.feature_image_slug}`));
+        await fs.unlink(path.join(__dirname, `../../../public/uploads/${post.feature_image_slug}.jpeg`));
     }
     post.feature_image_url = `/static/uploads/${filename}`;
     post.feature_image_slug = filename;

@@ -70,8 +70,8 @@ const editSettings = async (data) => {
 };
 
 const uploadImage = async (filename) => {
-    if (!settings.cover_image_filename) {
-        await fs.unlink(path.join(__dirname, `../../../public/uploads/${settings.cover_image_filename}`));
+    if (settings.cover_image_filename !== null) {
+        await fs.unlink(path.join(__dirname, `../../../public/uploads/${settings.cover_image_filename}.jpeg`));
     }
     const url = `/static/uploads/${filename}`;
     settings.cover_image_filename = filename;
@@ -82,8 +82,8 @@ const uploadImage = async (filename) => {
 };
 
 const uploadLogo = async (filename) => {
-    if (!settings.logo_filename) {
-        await fs.unlink(path.join(__dirname, `../../../public/uploads/${settings.logo_filename}`));
+    if (settings.logo_filename !== null) {
+        await fs.unlink(path.join(__dirname, `../../../public/uploads/${settings.logo_filename}.jpeg`));
     }
     settings.logo_filename = filename;
     settings.logo_url = `/static/uploads/${filename}`;

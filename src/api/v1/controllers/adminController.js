@@ -115,7 +115,7 @@ const uploadImage = async (req, res, next) => {
 const uploadLogo = async (req, res, next) => {
     const filename = `${Date.now()}`;
     try {
-        await imageProcessing.compressImage(req.file.buffer, filename);
+        await imageProcessing.compressLogo(req.file.buffer, filename);
         await settingsService.uploadLogo(filename);
     } catch (error) {
         next(error);
