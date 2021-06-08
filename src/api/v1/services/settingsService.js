@@ -11,6 +11,8 @@ const loadSettings = async () => {
     return settings;
 };
 
+const getSettings = () => settings;
+
 const createSettings = async (data) => {
     settings = new Settings({
         title: data.title,
@@ -97,4 +99,5 @@ module.exports = {
     editSettings,
     uploadImage,
     uploadLogo,
+    getSettings,
 };

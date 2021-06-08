@@ -1,6 +1,6 @@
 const slugify = require('slugify');
 const Category = require('../models/category');
-const { settings } = require('./settingsService');
+const { getSettings } = require('./settingsService');
 
 const getAllCategories = async (fields) => {
     let promise = Category.find();
@@ -35,6 +35,7 @@ const deleteCategory = async (catID) => {
 
 const createCategory = async (data) => {
     const slug = slugify(data.name);
+    const settings = getSettings();
     let category = new Category({
         slug,
         name: data.name,
@@ -61,6 +62,7 @@ const editCategory = async (catID, data) => {
     if (category === null) {
         throw new Error('Category does not exists.');
     }
+    const settings = getSettings();
     category.slug = slug;
     category.name = data.name;
     category.description = data.description;

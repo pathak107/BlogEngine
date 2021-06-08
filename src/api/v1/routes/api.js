@@ -18,10 +18,10 @@ router.get('/posts', postController.getAllPosts);
 router.get('/posts/:postID', postController.getPost);
 router.get('/posts/slug/:slug', postController.getPostBySlug);
 
-router.post('/posts', auth.adminVerify, postController.createPost);
-router.post('/posts/feature_image/:postID', auth.adminVerify, upload.single('feature_image'), postController.uploadImage);
-router.put('/posts/:postID', auth.adminVerify, postController.editPost);
-router.patch('/posts/publishToggle/:postID', auth.adminVerify, postController.togglePublish);
+router.post('/posts', auth.editorOrAdminVerify, postController.createPost);
+router.post('/posts/feature_image/:postID', auth.editorOrAdminVerify, upload.single('feature_image'), postController.uploadImage);
+router.put('/posts/:postID', auth.editorOrAdminVerify, postController.editPost);
+router.patch('/posts/publishToggle/:postID', auth.editorOrAdminVerify, postController.togglePublish);
 router.delete('/posts/:postID', auth.adminVerify, postController.deletePost);
 
 // Category end points
