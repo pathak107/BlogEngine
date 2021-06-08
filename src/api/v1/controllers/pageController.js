@@ -1,15 +1,15 @@
-const postService = require('../services/postService');
+const pageService = require('../services/pageService');
 const imageProcessing = require('../helpers/imageProcessing');
 
-const getAllPosts = async (req, res, next) => {
+const getAllPages = async (req, res, next) => {
     const {
-        size, page, fields, authorID, categoryID, include, sort,
+        size, page, fields,
     } = req.query;
     const published = true; // because client should not have access to drafts
-    let posts;
+    let pages;
     try {
-        posts = await postService.fetchAllPosts(
-            size, page, fields, published, authorID, categoryID, include, sort,
+        pages = await pageService.fetchAllPages(
+            size, page, fields, published,
         );
     } catch (error) {
         next(error);
@@ -17,56 +17,56 @@ const getAllPosts = async (req, res, next) => {
     }
     return res.status(200).json({
         status: 'success',
-        posts,
+        pages,
     });
 };
 
-const getPost = async (req, res, next) => {
-    const { fields, include } = req.query;
-    let post;
+const getPage = async (req, res, next) => {
+    const { fields } = req.query;
+    let page;
     try {
-        post = await postService.fetchPost(req.params.postID, fields, null, include);
+        page = await pageService.fetchPage(req.params.pageID, fields, null);
     } catch (error) {
         next(error);
         return res.end();
     }
-    if (post === null) {
+    if (page === null) {
         return res.status(200).json({
             status: 'failure',
-            message: 'Could not fetch the post',
+            message: 'Could not fetch the page',
         });
     }
     return res.status(200).json({
         status: 'success',
-        post,
+        page,
     });
 };
 
-const getPostBySlug = async (req, res, next) => {
-    const { fields, include } = req.query;
-    let post;
+const getPageBySlug = async (req, res, next) => {
+    const { fields } = req.query;
+    let page;
     try {
-        post = await postService.fetchPost(null, fields, req.params.slug, include);
+        page = await pageService.fetchPage(null, fields, req.params.slug);
     } catch (error) {
         next(error);
         return res.end();
     }
-    if (post === null) {
+    if (page === null) {
         return res.status(200).json({
             status: 'failure',
-            message: 'Could not fetch the post',
+            message: 'Could not fetch the page',
         });
     }
     return res.status(200).json({
         status: 'success',
-        post,
+        page,
     });
 };
 
-const deletePost = async (req, res, next) => {
+const deletePage = async (req, res, next) => {
     let isDeleted;
     try {
-        isDeleted = await postService.deletePost(req.params.postID);
+        isDeleted = await pageService.deletepage(req.params.pageID);
     } catch (error) {
         next(error);
         return res.end();
@@ -74,19 +74,19 @@ const deletePost = async (req, res, next) => {
     if (isDeleted) {
         return res.status(200).json({
             status: 'success',
-            message: 'Successfully deleted the post',
+            message: 'Successfully deleted the page',
         });
     }
     return res.status(200).json({
         status: 'failure',
-        message: 'post does not exists',
+        message: 'page does not exists',
     });
 };
 
-const createPost = async (req, res, next) => {
-    let post;
+const createPage = async (req, res, next) => {
+    let page;
     try {
-        post = await postService.newPost(req.body);
+        page = await pageService.newpage(req.body);
     } catch (error) {
         next(error);
         return res.end();
@@ -94,27 +94,27 @@ const createPost = async (req, res, next) => {
 
     return res.status(200).json({
         status: 'success',
-        post,
+        page,
     });
 };
 
-const editPost = async (req, res, next) => {
-    let post;
+const editPage = async (req, res, next) => {
+    let page;
     try {
-        post = await postService.editPost(req.params.postID, req.body);
+        page = await pageService.editpage(req.params.pageID, req.body);
     } catch (error) {
         next(error);
         return res.end();
     }
     return res.status(200).json({
         status: 'success',
-        post,
+        page,
     });
 };
 
 const togglePublish = async (req, res, next) => {
     try {
-        await postService.togglePublish(req.params.postID);
+        await pageService.togglePublish(req.params.pageID);
     } catch (error) {
         next(error);
         return res.end();
@@ -129,7 +129,7 @@ const uploadImage = async (req, res, next) => {
     const filename = `${Date.now()}`;
     try {
         await imageProcessing.compressImage(req.file.buffer, filename);
-        await postService.uploadImage(req.params.postID, filename);
+        await pageService.uploadImage(req.params.pageID, filename);
     } catch (error) {
         next(error);
         return res.end();
@@ -141,12 +141,12 @@ const uploadImage = async (req, res, next) => {
 };
 
 module.exports = {
-    getAllPosts,
-    createPost,
-    deletePost,
-    editPost,
-    getPost,
-    getPostBySlug,
+    getAllPages,
+    createPage,
+    deletePage,
+    editPage,
+    getPage,
+    getPageBySlug,
     togglePublish,
     uploadImage,
 };
