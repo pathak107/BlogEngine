@@ -8,9 +8,9 @@ const Editor = () => {
         sethtmlFromMarkdown(event.target.value);
     }
     return (
-        <div>
-            <Grid container spacing={1}>
-                <Grid item md={6}>
+        <div className='Editor'>
+            <Grid container spacing={3}>
+                <Grid item md={6} xs={12}>
                     <form noValidate autoComplete="off">
                         <TextField
                             id="outlined-textarea"
@@ -23,7 +23,7 @@ const Editor = () => {
                         />
                     </form>
                 </Grid>
-                <Grid item md={6}>
+                <Grid item md={6} xs={12}>
                     <Card variant="outlined">
                         <CardContent>
                             <ReactMarkdown>

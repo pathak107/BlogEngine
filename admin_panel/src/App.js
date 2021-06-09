@@ -4,6 +4,9 @@ import { CircularProgress } from '@material-ui/core';
 
 // Pages import
 import Home from './pages/Home';
+const Posts = React.lazy(() => import('./pages/Posts'));
+const Register = React.lazy(() => import('./pages/Register'));
+const Login = React.lazy(() => import('./pages/Login'));
 const PostCreate = React.lazy(() => import('./pages/PostCreate'));
 
 function App() {
@@ -18,13 +21,16 @@ function App() {
               <Home />
             </Route>
             <Route path="/login" exact>
-              <h1>about page</h1>
+              <Login />
             </Route>
             <Route path="/register" exact>
-              <h2>Users page</h2>
+              <Register />
             </Route>
-            <Route path="/post/create" exact>
+            <Route path="/posts/create" exact>
               <PostCreate />
+            </Route>
+            <Route path="/posts" exact>
+              <Posts/>
             </Route>
             <Route path='*'>
               <Redirect to='/login' />

@@ -1,17 +1,17 @@
-import { Container, TextField } from '@material-ui/core';
+import { Container, } from '@material-ui/core';
 import Editor from '../components/Editor/Editor'
+import MainHeader from '../components/MainHeader/MainHeader';
+import NewPostForm from '../components/NewPostForm/NewPostForm';
 
 const PostCreatePage = () => {
     return (
         <div>
             <Container>
-                <form noValidate autoComplete="off">
-                    <TextField id="standard-basic" label="Standard" />
-                    <TextField id="filled-basic" label="Filled" variant="filled" />
-                    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-                </form>
+                <MainHeader/>
+                <NewPostForm/>
+                <h2>Write your post here:</h2>
             </Container>
-            <Editor></Editor>
+            <Editor />
         </div>
 
     );
