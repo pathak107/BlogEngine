@@ -1,12 +1,13 @@
 import { Container } from '@material-ui/core';
-import AuthForm from '../components/AuthForm/AuthForm';
-import MainHeader from '../components/MainHeader/MainHeader';
+import React from 'react';
+import AuthForm from '../components/Core/AuthForm/AuthForm';
+import MainHeader from '../components/UI/MainHeader/MainHeader';
 const Register = () => {
     const registerHandler=(email,password, name)=>{
         console.log(email, password, name);
     }
     return (
-        <div>
+        <React.Fragment>
             <MainHeader/>
             <Container className='center-horizontal center-vertical' maxWidth='xs' >
             <AuthForm 
@@ -15,7 +16,7 @@ const Register = () => {
                 getFormData={registerHandler}
             />
         </Container>
-        </div>
+        </React.Fragment>
         
     );
 }

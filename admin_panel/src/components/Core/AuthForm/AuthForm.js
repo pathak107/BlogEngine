@@ -1,5 +1,6 @@
-import { TextField, Card, CardContent, Button, CircularProgress } from '@material-ui/core';
+import { TextField, Card, CardContent, Button} from '@material-ui/core';
 import { useState } from 'react';
+import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 const AuthForm = (props) => {
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
@@ -54,7 +55,7 @@ const AuthForm = (props) => {
                             margin='normal'
                             onChange={userPasswordChangeHandler}
                         />
-                        {props.isBusy ? <CircularProgress className='center-horizontal' /> :
+                        {props.isBusy ? <ProgressBar className='center-horizontal' /> :
                             <Button
                                 variant="outlined"
                                 color="primary"

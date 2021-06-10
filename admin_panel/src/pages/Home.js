@@ -1,9 +1,10 @@
 import { Card, CardContent, Container, Grid } from '@material-ui/core';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import MainHeader from '../components/MainHeader/MainHeader';
+import MainHeader from '../components/UI/MainHeader/MainHeader';
 const HomePage = () => {
     return (
-        <div>
+        <React.Fragment>
             <MainHeader/>
             <Container maxWidth='sm'>
                 <Grid container spacing={3}>
@@ -17,7 +18,7 @@ const HomePage = () => {
                         </Link>
                     </Grid>
                     <Grid item xs={6}>
-                        <Link to='/register'>
+                        <Link to='/author'>
                             <Card variant='outlined'>
                                 <CardContent>
                                     <h3>Authors</h3>
@@ -47,7 +48,7 @@ const HomePage = () => {
                         <Link to='/register'>
                             <Card variant='outlined'>
                                 <CardContent>
-                                    <h3>Pages</h3>
+                                    <h3>Settings</h3>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -56,14 +57,14 @@ const HomePage = () => {
                         <Link to='/register'>
                             <Card variant='outlined'>
                                 <CardContent>
-                                    <h3>Settings</h3>
+                                    <h3>Logout</h3>
                                 </CardContent>
                             </Card>
                         </Link>
                     </Grid>
                 </Grid>
             </Container>
-        </div>
+        </React.Fragment>
     );
 }
 

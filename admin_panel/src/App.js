@@ -1,9 +1,10 @@
 import React, { Suspense } from 'react';
 import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
-import { CircularProgress } from '@material-ui/core';
 
 // Pages import
 import Home from './pages/Home';
+import ProgressBar from './components/UI/ProgressBar/ProgressBar';
+import Author from './pages/Author';
 const Posts = React.lazy(() => import('./pages/Posts'));
 const Register = React.lazy(() => import('./pages/Register'));
 const Login = React.lazy(() => import('./pages/Login'));
@@ -14,7 +15,7 @@ function App() {
     <BrowserRouter>
       <div>
         <Suspense fallback={
-          <CircularProgress />
+          <ProgressBar />
         }>
           <Switch>
             <Route path="/" exact>
@@ -29,8 +30,14 @@ function App() {
             <Route path="/posts/create" exact>
               <PostCreate />
             </Route>
+            <Route path="/posts/edit/:postID" exact>
+              <PostCreate />
+            </Route>
             <Route path="/posts" exact>
               <Posts/>
+            </Route>
+            <Route path="/author" exact>
+              <Author/>
             </Route>
             <Route path='*'>
               <Redirect to='/login' />

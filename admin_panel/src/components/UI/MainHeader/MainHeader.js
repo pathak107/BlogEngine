@@ -1,9 +1,9 @@
 const MainHeader = () => {
-    return ( 
-        <div className='center-horizontal'>
+    return (
+        <header className='header center-horizontal'>
             <h1>BhootJS Blog</h1>
-        </div>
+        </header>
     );
 }
- 
+
 export default MainHeader;

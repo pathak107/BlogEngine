@@ -20,6 +20,7 @@ const Editor = () => {
                             variant="outlined"
                             fullWidth
                             onChange={ convertMarkToHtml }
+                            rows={100}
                         />
                     </form>
                 </Grid>

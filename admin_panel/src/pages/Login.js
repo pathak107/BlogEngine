@@ -1,12 +1,13 @@
 import { Container } from '@material-ui/core';
-import AuthForm from '../components/AuthForm/AuthForm';
-import MainHeader from '../components/MainHeader/MainHeader';
+import AuthForm from '../components/Core/AuthForm/AuthForm';
+import MainHeader from '../components/UI/MainHeader/MainHeader';
+import React from 'react';
 const Login = () => {
     const loginHandler = (email, password) => {
         console.log(email, password);
     }
     return (
-        <div>
+        <React.Fragment>
             <MainHeader />
             <Container className='center-horizontal center-vertical' maxWidth='xs' >
                 <AuthForm
@@ -15,7 +16,7 @@ const Login = () => {
                     getFormData={loginHandler}
                 />
             </Container>
-        </div>
+        </React.Fragment>
 
     );
 }
