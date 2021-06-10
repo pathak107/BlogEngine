@@ -27,7 +27,7 @@ const HomePage = () => {
                         </Link>
                     </Grid>
                     <Grid item xs={6}>
-                        <Link to='/register'>
+                        <Link to='/category'>
                             <Card variant='outlined'>
                                 <CardContent>
                                     <h3>Category</h3>

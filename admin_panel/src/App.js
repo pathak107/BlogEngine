@@ -5,6 +5,7 @@ import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import Home from './pages/Home';
 import ProgressBar from './components/UI/ProgressBar/ProgressBar';
 import Author from './pages/Author';
+import Category from './pages/Category';
 const Posts = React.lazy(() => import('./pages/Posts'));
 const Register = React.lazy(() => import('./pages/Register'));
 const Login = React.lazy(() => import('./pages/Login'));
@@ -38,6 +39,9 @@ function App() {
             </Route>
             <Route path="/author" exact>
               <Author/>
+            </Route>
+            <Route path="/category" exact>
+              <Category/>
             </Route>
             <Route path='*'>
               <Redirect to='/login' />
