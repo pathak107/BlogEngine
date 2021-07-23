@@ -1,4 +1,3 @@
 {
-  "extends": ["next", "next/core-web-vitals"],
-  "react/display-name": [false, { "ignoreTranspilerName": false }]
+  "extends": ["next", "next/core-web-vitals"]
 }

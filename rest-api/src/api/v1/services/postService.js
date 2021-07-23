@@ -174,10 +174,10 @@ const uploadImage = async (postID, filename) => {
     if (post.feature_image_slug !== null) {
         await fs.unlink(path.join(__dirname, `../../../public/uploads/${post.feature_image_slug}.jpeg`));
     }
-    post.feature_image_url = `/static/uploads/${filename}`;
-    post.feature_image_slug = filename;
-    post.og_image_url = `/static/uploads/${filename}`;
-    post.twitter_image = `/static/uploads/${filename}`;
+    post.feature_image_url = `/static/uploads/${filename}.jpeg`;
+    post.feature_image_slug = `${filename}.jpeg`;
+    post.og_image_url = `/static/uploads/${filename}.jpeg`;
+    post.twitter_image = `/static/uploads/${filename}.jpeg`;
     await post.save();
 };
 module.exports = {

@@ -39,6 +39,6 @@ app.use((req, res) => res.status(404).json({
 }));
 
 // starting express server
-app.listen(process.env.PORT || 3000, async () => {
+app.listen(process.env.PORT || 8080, async () => {
     logger.info('Server started.');
 });

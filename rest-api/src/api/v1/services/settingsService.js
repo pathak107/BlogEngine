@@ -75,8 +75,8 @@ const uploadImage = async (filename) => {
     if (settings.cover_image_filename !== null) {
         await fs.unlink(path.join(__dirname, `../../../public/uploads/${settings.cover_image_filename}.jpeg`));
     }
-    const url = `/static/uploads/${filename}`;
-    settings.cover_image_filename = filename;
+    const url = `/static/uploads/${filename}.jpeg`;
+    settings.cover_image_filename = `${filename}.jpeg`;
     settings.cover_image_url = url;
     settings.og_image = url;
     settings.twitter_image = url;
@@ -88,7 +88,7 @@ const uploadLogo = async (filename) => {
         await fs.unlink(path.join(__dirname, `../../../public/uploads/${settings.logo_filename}.jpeg`));
     }
     settings.logo_filename = filename;
-    settings.logo_url = `/static/uploads/${filename}`;
+    settings.logo_url = `/static/uploads/${filename}.jpeg`;
     await settings.save();
 };
 
