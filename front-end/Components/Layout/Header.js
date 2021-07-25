@@ -1,9 +1,16 @@
 import Navigation from './Navigation';
-const Header = () => {
+import { Fragment } from 'react'
+import Head from 'next/head'
+
+const Header = (props) => {
     return (
-        <div>
-            <Navigation/>
-        </div>
+        <Fragment>
+            <Head>
+                <title>{props.title}</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
+            <Navigation />
+        </Fragment>
     );
 }
 export default Header;
